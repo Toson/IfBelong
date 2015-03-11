@@ -20,7 +20,7 @@ namespace IfBelong
         /// <param name="Result">Результат</param>
         /// <param name="Pnt_Coords">Координаты точки</param>
         /// <returns></returns>
-        public static bool SaveData(String Path, String Result, Point Pnt_Coords)
+        public static bool SaveData(String Path, String Result, Points Pnt_Coords)
         {
             StreamWriter SW = null;
             try

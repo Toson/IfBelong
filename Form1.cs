@@ -22,9 +22,9 @@ namespace IfBelong
             y_TL = 50,//верхней точки квадрата
             R,//Радиус
             Step = 15;//Шаг сетки
-        private Point Pnt = new Point(-20, -20);//Координаты точки
-        private Point Pnt_Screen = new Point(-20, -20);//Экранные координаты точки
-        private Point Pnt_Cntr = new Point(0, 0);//Центр окружности
+        private Points Pnt = new Points(-20, -20);//Координаты точки
+        private Points Pnt_Screen = new Points(-20, -20);//Экранные координаты точки
+        private Points Pnt_Cntr = new Points(0, 0);//Центр окружности
         private Rectangle Border_Rect;//Границы
         private String Results = "";//Последний результат
 
@@ -42,7 +42,7 @@ namespace IfBelong
             InitializeComponent();
             PB_Paint.Paint += PB_Paint_Paint;
 
-            R = x_circl / (2*Step);//Считаем радиус
+            R = x_circl / (20*Step);//Считаем радиус
             Border_Rect = new Rectangle(PB_Paint.Width / 2, (PB_Paint.Height / 2) - Step, PB_Paint.Width, PB_Paint.Height);//Указываем область, в которую необходимо попасть
         }
 
@@ -73,51 +73,82 @@ namespace IfBelong
             P.Width = 2f;
             ///Рисуем шкалу на осях
             #region Шкала
-            for (int i = PB_Paint.Width / 2, j = PB_Paint.Height / 2, k = 0; i <= PB_Paint.Width && j <= PB_Paint.Height; i += Step, j += Step, k++)
+            float k = 0;
+            String Scale;
+            for (int i = PB_Paint.Width / 2, j = PB_Paint.Height / 2; i <= PB_Paint.Width && j <= PB_Paint.Height; i += Step, j += Step, k+=0.1f)
             {
                 g.DrawEllipse(P, (float)(i - 2), (float)(PB_Paint.Height / 2 - 2), 4, 4);
 
+                Scale = k.ToString();
+                if(Scale.Length > 3)
+                    Scale = Scale.Remove(3);
+
                 if(k>0)
-                    g.DrawString(k.ToString(), new Font("Times New Roman", 8, FontStyle.Bold), Brushes.Black, (float)(i-3), (float)(PB_Paint.Height / 2 + 8));
+                    g.DrawString(Scale, new Font("Times New Roman", 7, FontStyle.Bold), Brushes.Black, (float)(i - 6), (float)(PB_Paint.Height / 2 + 8));
 
                 g.DrawEllipse(P, (float)(PB_Paint.Width / 2 - 2), (float)(j - 2), 4, 4);
 
                 if (k > 0)
-                    g.DrawString("-"+k.ToString(), new Font("Times New Roman", 8, FontStyle.Bold), Brushes.Black, (float)(PB_Paint.Width / 2) - 18, (float)(j-7));
+                    g.DrawString("-" + Scale, new Font("Times New Roman", 7, FontStyle.Bold), Brushes.Black, (float)(PB_Paint.Width / 2) - 22, (float)(j - 6));
             }
-
-            for (int i = (PB_Paint.Width / 2) - Step, j = (PB_Paint.Height / 2) - Step, k = 1; i >= 0 && j >= 0; i -= Step, j -= Step, k++)
+            k = 0.1f;
+            for (int i = (PB_Paint.Width / 2) - Step, j = (PB_Paint.Height / 2) - Step; i >= 0 && j >= 0; i -= Step, j -= Step, k += 0.1f)
             {
+                Scale = k.ToString();
+                if (Scale.Length > 3)
+                    Scale = Scale.Remove(3);
+
                 g.DrawEllipse(P, (float)(i - 2), (float)(PB_Paint.Height / 2 - 2), 4, 4);
-                g.DrawString("-" + k.ToString(), new Font("Times New Roman", 8, FontStyle.Bold), Brushes.Black, (float)(i - 7), (float)(PB_Paint.Height / 2 - 18));
+                g.DrawString("-" + Scale, new Font("Times New Roman", 7, FontStyle.Bold), Brushes.Black, (float)(i - 8), (float)(PB_Paint.Height / 2 - 18));
 
                 g.DrawEllipse(P, (float)(PB_Paint.Width / 2 - 2), (float)(j - 2), 4, 4);
-                g.DrawString(k.ToString(), new Font("Times New Roman", 8, FontStyle.Bold), Brushes.Black, (float)(PB_Paint.Width / 2) + 8, (float)(j - 7));
+                g.DrawString(Scale, new Font("Times New Roman", 7, FontStyle.Bold), Brushes.Black, (float)(PB_Paint.Width / 2) + 8, (float)(j - 7));
             }
             #endregion
             ///
-            P.Color = Color.Green;
+            P.Color = Color.DarkGreen;
             P.Width = 4f;
             //Рисуем точку
-            g.DrawEllipse(P, Pnt_Screen.X - 2, Pnt_Screen.Y - 2, 4, 4); 
+            g.DrawEllipse(P, Pnt_Screen.X - 2, Pnt_Screen.Y - 2, 4, 4);
 
+            //P.Width = 2f;
+            //g.DrawLine(P, 0, PB_Paint.Height/2 + 9 * Step, 400, PB_Paint.Height/2 + 9 * Step);
+            //g.DrawLine(P, PB_Paint.Width / 2 + 5 * Step, 0, PB_Paint.Width / 2 + 5 * Step, 400);
+            //g.DrawLine(P, PB_Paint.Width / 2 + 1 * Step, 0, PB_Paint.Width / 2 + 1 * Step, 400);
         }
 
         private void button_check_Click(object sender, EventArgs e)
         {
-            Pnt.X = (int)numeric_X.Value;//Узнаем
-            Pnt.Y = (int)numeric_Y.Value;//Точку
-            Results = Determine.Determine_Attachment(Pnt, Pnt_Cntr, R, new Rectangle(0, 1, 14, -14));//Определяем принадлежность
+            if (numeric_X.Text.Length > 0 && numeric_Y.Text.Length > 0)
+            {
+                try
+                {
+                    Points TMP = new Points();
+                    TMP.X = (float)Convert.ToDouble(numeric_X.Text);//Узнаем
+                    TMP.Y = (float)Convert.ToDouble(numeric_Y.Text);//Точку
+                    Pnt = TMP;
+                }
+                catch (System.Exception)
+                {
+                    MessageBox.Show("Введена некорректная информация.");
+                    return;
+                }
+                Results = Determine.Determine_Attachment(Pnt, Pnt_Cntr, R, new RectangleF(0, 0.1f, 1.4f, -1.4f));//Определяем принадлежность
 
-            Pnt_Screen = TranslateCoords(Pnt);//Переводим координаты точки для отображения на экране
-            
-            PB_Paint.Invalidate();
+                Pnt_Screen = TranslateCoords(Pnt);//Переводим координаты точки для отображения на экране
 
-            MessageBox.Show(Results);//Показываем результат
+                PB_Paint.Invalidate();
+
+                MessageBox.Show(Results);//Показываем результат
+            }
+            else
+            {
+                MessageBox.Show("Поле ввода не заполнено!");
+            }
         }
 
         //Переводим в экранную систему координат
-        private Point TranslateCoords(Point Pnt_Tmp)
+        private Points TranslateCoords(Points Pnt_Tmp)
         {
             if (Pnt_Tmp.X == 0)
             {
@@ -125,11 +156,11 @@ namespace IfBelong
             }
             else if (Pnt_Tmp.X > 0)
             {
-                Pnt_Tmp.X = (PB_Paint.Width / 2) + (Math.Abs(Pnt_Tmp.X) * Step);
+                Pnt_Tmp.X = (PB_Paint.Width / 2) + (Math.Abs(Pnt_Tmp.X * 10) * Step);
             }
             else if (Pnt_Tmp.X < 0)
             {
-                Pnt_Tmp.X = (PB_Paint.Width / 2) - (Math.Abs(Pnt_Tmp.X) * Step);
+                Pnt_Tmp.X = (PB_Paint.Width / 2) - (Math.Abs(Pnt_Tmp.X * 10) * Step);
             }
 
             if (Pnt_Tmp.Y == 0)
@@ -138,11 +169,11 @@ namespace IfBelong
             }
             else if (Pnt_Tmp.Y < 0)
             {
-                Pnt_Tmp.Y = (PB_Paint.Height / 2) + (Math.Abs(Pnt_Tmp.Y) * Step);
+                Pnt_Tmp.Y = (PB_Paint.Height / 2) + (Math.Abs(Pnt_Tmp.Y * 10) * Step);
             }
             else if (Pnt_Tmp.Y > 0)
             {
-                Pnt_Tmp.Y = (PB_Paint.Height / 2) - (Math.Abs(Pnt_Tmp.Y) * Step);
+                Pnt_Tmp.Y = (PB_Paint.Height / 2) - (Math.Abs(Pnt_Tmp.Y * 10) * Step);
             }
 
             return Pnt_Tmp;
@@ -158,7 +189,17 @@ namespace IfBelong
             dialog.CheckPathExists = true;
             if (dialog.ShowDialog(this) == DialogResult.OK)
             {
-                MessageBox.Show(Open_Coords.OpenData(dialog.FileName));
+                Return_Information ForShowing = Open_Coords.OpenData(dialog.FileName);
+
+                if (ForShowing.Good == true)
+                {
+                    Pnt.X = ForShowing.X;
+                    Pnt.Y = ForShowing.Y;
+                    Pnt_Screen = TranslateCoords(Pnt);
+                    PB_Paint.Invalidate();
+                }
+
+                MessageBox.Show(ForShowing.Message);
             }
         }
 

@@ -13,15 +13,17 @@ namespace IfBelong
 {
     static class Open_Coords
     {
+        
+        private static Return_Information RI;
         /// <summary>
         /// Открыть ранее сохраненный результат
         /// </summary>
         /// <returns></returns>
-        public static String OpenData(String Path)
+        public static Return_Information OpenData(String Path)
         {
             String Result = "";
             String [] Tmp = new String[2];
-            int Tmp32 = 0;
+            float [] Tmp32 = new float [2];
             StreamReader SR = null;
             try
             {              
@@ -29,7 +31,8 @@ namespace IfBelong
                      SR = new StreamReader(Path);
                  else
                  {
-                     return "Что-то не так с путем до файла.";
+                     RI = new Return_Information("Что-то не так с путем до файла.", -10, -10, false);
+                     return RI;
                  }
 
                  Result += SR.ReadLine();//Читаем результат
@@ -37,7 +40,8 @@ namespace IfBelong
                  if (Result.Length < 10)//Если Result не содержит что-то похожее по длине на стандартные сообщения, генерируемые программой
                  {
                      SR.Close();
-                     return "Файл плохой, дайте хороший!";
+                     RI = new Return_Information("Файл плохой, дайте хороший!", -10, -10, false);
+                     return RI;
                  }
 
                  Result += "\nКоординаты (x ; y): ";
@@ -45,19 +49,21 @@ namespace IfBelong
                  for (int i = 0; i < 2; i++)//Проверяем
                  {
                      Tmp[i] += SR.ReadLine();
-                     Tmp32 = Convert.ToInt32(Tmp[i]);
+                     Tmp32[i] = (float)Convert.ToDouble(Tmp[i]);
                  }
 
                  Result += Tmp[0] + " ; " + Tmp[1];
 
+                 RI = new Return_Information(Result, Tmp32[0], Tmp32[1], true);
+
                  SR.Close();
-                return Result;
+                return RI;
             }
             catch (System.Exception)
             {
                 if (SR != null)
                     SR.Close();
-                return "Файл плохой, дайте хороший!";
+                return RI = new Return_Information("Файл плохой, дайте хороший!", -10, -10, false);
             }
         }
     }

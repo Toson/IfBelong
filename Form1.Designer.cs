@@ -32,15 +32,13 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.Open_Button = new System.Windows.Forms.ToolStripMenuItem();
             this.Save_Button = new System.Windows.Forms.ToolStripMenuItem();
-            this.numeric_X = new System.Windows.Forms.NumericUpDown();
-            this.numeric_Y = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button_check = new System.Windows.Forms.Button();
+            this.numeric_X = new System.Windows.Forms.TextBox();
+            this.numeric_Y = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.PB_Paint)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numeric_X)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numeric_Y)).BeginInit();
             this.SuspendLayout();
             // 
             // PB_Paint
@@ -79,40 +77,6 @@
             this.Save_Button.Text = "Сохранить...";
             this.Save_Button.Click += new System.EventHandler(this.Save_Button_Click);
             // 
-            // numeric_X
-            // 
-            this.numeric_X.Location = new System.Drawing.Point(12, 454);
-            this.numeric_X.Maximum = new decimal(new int[] {
-            13,
-            0,
-            0,
-            0});
-            this.numeric_X.Minimum = new decimal(new int[] {
-            13,
-            0,
-            0,
-            -2147483648});
-            this.numeric_X.Name = "numeric_X";
-            this.numeric_X.Size = new System.Drawing.Size(46, 20);
-            this.numeric_X.TabIndex = 4;
-            // 
-            // numeric_Y
-            // 
-            this.numeric_Y.Location = new System.Drawing.Point(12, 495);
-            this.numeric_Y.Maximum = new decimal(new int[] {
-            13,
-            0,
-            0,
-            0});
-            this.numeric_Y.Minimum = new decimal(new int[] {
-            13,
-            0,
-            0,
-            -2147483648});
-            this.numeric_Y.Name = "numeric_Y";
-            this.numeric_Y.Size = new System.Drawing.Size(46, 20);
-            this.numeric_Y.TabIndex = 5;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -138,10 +102,26 @@
             this.button_check.Location = new System.Drawing.Point(98, 442);
             this.button_check.Name = "button_check";
             this.button_check.Size = new System.Drawing.Size(313, 74);
-            this.button_check.TabIndex = 8;
+            this.button_check.TabIndex = 3;
             this.button_check.Text = "ПРОВЕРИТЬ!";
             this.button_check.UseVisualStyleBackColor = false;
             this.button_check.Click += new System.EventHandler(this.button_check_Click);
+            // 
+            // numeric_X
+            // 
+            this.numeric_X.Location = new System.Drawing.Point(12, 453);
+            this.numeric_X.MaxLength = 5;
+            this.numeric_X.Name = "numeric_X";
+            this.numeric_X.Size = new System.Drawing.Size(46, 20);
+            this.numeric_X.TabIndex = 1;
+            // 
+            // numeric_Y
+            // 
+            this.numeric_Y.Location = new System.Drawing.Point(12, 490);
+            this.numeric_Y.MaxLength = 5;
+            this.numeric_Y.Name = "numeric_Y";
+            this.numeric_Y.Size = new System.Drawing.Size(46, 20);
+            this.numeric_Y.TabIndex = 2;
             // 
             // Form1
             // 
@@ -149,11 +129,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(423, 528);
+            this.Controls.Add(this.numeric_Y);
+            this.Controls.Add(this.numeric_X);
             this.Controls.Add(this.button_check);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.numeric_Y);
-            this.Controls.Add(this.numeric_X);
             this.Controls.Add(this.PB_Paint);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -165,8 +145,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.PB_Paint)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numeric_X)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numeric_Y)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,11 +156,11 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem Open_Button;
         private System.Windows.Forms.ToolStripMenuItem Save_Button;
-        private System.Windows.Forms.NumericUpDown numeric_X;
-        private System.Windows.Forms.NumericUpDown numeric_Y;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button_check;
+        private System.Windows.Forms.TextBox numeric_X;
+        private System.Windows.Forms.TextBox numeric_Y;
     }
 }
 

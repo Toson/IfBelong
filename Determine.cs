@@ -24,13 +24,13 @@ namespace IfBelong
         /// <param name="Rect">Ограничивающий прямоугольник</param>
         /// <returns>Результат</returns>
         /// 
-        public static string Determine_Attachment(Point Pnt_Chk, Point Pnt_Cntr, float R, Rectangle Rect)
+        public static string Determine_Attachment(Points Pnt_Chk, Points Pnt_Cntr, float R, RectangleF Rect)
         {
             if (Rect_Contain(Rect, Pnt_Chk))//Если ограничивающий прямоугольник включает нашу точку
             {
                 float In_Or_Out = Circle_Contain(Pnt_Chk, Pnt_Cntr);//Узнаем, находится ли точка в круге
 
-                if (In_Or_Out - R*R <= 2 && In_Or_Out - R*R >= -2)
+                if (In_Or_Out - R*R <= 0.2f && In_Or_Out - R*R >= -0.2f)
                 {
                     In_Or_Out = R*R;
                 }
@@ -58,16 +58,16 @@ namespace IfBelong
         }
 
         //Проверяет, находится ли в окружности точка
-        private static float Circle_Contain(Point Pnt_Chk, Point Pnt_Cntr)
+        private static float Circle_Contain(Points Pnt_Chk, Points Pnt_Cntr)
         {
             return ((Pnt_Chk.Y - Pnt_Cntr.Y) * (Pnt_Chk.Y - Pnt_Cntr.Y) + (Pnt_Chk.X - Pnt_Cntr.X) * (Pnt_Chk.X - Pnt_Cntr.X));
         }
 
         //Проверяет, находится ли в квадрате точка
-        private static bool Rect_Contain(Rectangle Rect, Point Pnt_Chk)
+        private static bool Rect_Contain(RectangleF Rect, Points Pnt_Chk)
         {
-            int X = Pnt_Chk.X;
-            int Y = Pnt_Chk.Y;
+            float X = Pnt_Chk.X;
+            float Y = Pnt_Chk.Y;
 
             if (X >= Rect.X && Y <= Rect.Y)
             {
@@ -79,10 +79,10 @@ namespace IfBelong
         }
 
         //Проверяет, находится ли на границе квадрата точка
-        private static bool Rect_Edge_Contain(Rectangle Rect, Point Pnt_Chk)
+        private static bool Rect_Edge_Contain(RectangleF Rect, Points Pnt_Chk)
         {
-            int X = Pnt_Chk.X;
-            int Y = Pnt_Chk.Y;
+            float X = Pnt_Chk.X;
+            float Y = Pnt_Chk.Y;
 
             if (X >= Rect.X && X<=Rect.Width && (Y == Rect.Y || Y == Rect.Height))
             {
