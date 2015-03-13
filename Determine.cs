@@ -30,7 +30,7 @@ namespace IfBelong
             {
                 float In_Or_Out = Circle_Contain(Pnt_Chk, Pnt_Cntr);//Узнаем, находится ли точка в круге
 
-                if (In_Or_Out - R*R <= 0.2f && In_Or_Out - R*R >= -0.2f)
+                if (In_Or_Out - R*R <= 0.02f && In_Or_Out - R*R >= -0.02f)
                 {
                     In_Or_Out = R*R;
                 }
