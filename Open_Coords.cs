@@ -21,7 +21,7 @@ namespace IfBelong
         /// <returns></returns>
         public static Return_Information OpenData(String Path)
         {
-            String Result = "";
+           
             String [] Tmp = new String[2];
             float [] Tmp32 = new float [2];
             StreamReader SR = null;
@@ -35,16 +35,6 @@ namespace IfBelong
                      return RI;
                  }
 
-                 Result += SR.ReadLine();//Читаем результат
-
-                 if (Result.Length < 10)//Если Result не содержит что-то похожее по длине на стандартные сообщения, генерируемые программой
-                 {
-                     SR.Close();
-                     RI = new Return_Information("Файл плохой, дайте хороший!", -10, -10, false);
-                     return RI;
-                 }
-
-                 Result += "\nКоординаты (x ; y): ";
 
                  for (int i = 0; i < 2; i++)//Проверяем
                  {
@@ -52,9 +42,11 @@ namespace IfBelong
                      Tmp32[i] = (float)Convert.ToDouble(Tmp[i]);
                  }
 
-                 Result += Tmp[0] + " ; " + Tmp[1];
+                 String Exmpl = SR.ReadToEnd();
+                 if (Exmpl.Length > 0)
+                     throw new System.Exception();
 
-                 RI = new Return_Information(Result, Tmp32[0], Tmp32[1], true);
+                 RI = new Return_Information("PrettyGood", Tmp32[0], Tmp32[1], true);
 
                  SR.Close();
                 return RI;

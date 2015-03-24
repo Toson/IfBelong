@@ -193,13 +193,9 @@ namespace IfBelong
 
                 if (ForShowing.Good == true)
                 {
-                    Pnt.X = ForShowing.X;
-                    Pnt.Y = ForShowing.Y;
-                    Pnt_Screen = TranslateCoords(Pnt);
-                    PB_Paint.Invalidate();
+                    numeric_X.Text = ForShowing.X.ToString();
+                    numeric_Y.Text = ForShowing.Y.ToString();
                 }
-
-                MessageBox.Show(ForShowing.Message);
             }
         }
 
