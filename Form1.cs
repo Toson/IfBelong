@@ -196,6 +196,10 @@ namespace IfBelong
                     numeric_X.Text = ForShowing.X.ToString();
                     numeric_Y.Text = ForShowing.Y.ToString();
                 }
+                else
+                {
+                    MessageBox.Show(ForShowing.Message);
+                }
             }
         }
 

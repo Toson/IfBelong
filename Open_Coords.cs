@@ -39,7 +39,10 @@ namespace IfBelong
                  for (int i = 0; i < 2; i++)//Проверяем
                  {
                      Tmp[i] += SR.ReadLine();
-                     Tmp32[i] = (float)Convert.ToDouble(Tmp[i]);
+                     if(Tmp[i].Length <= 5)
+                        Tmp32[i] = (float)Convert.ToDouble(Tmp[i]);
+                     else
+                         throw new System.Exception();
                  }
 
                  String Exmpl = SR.ReadToEnd();
